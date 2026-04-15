@@ -7,9 +7,7 @@ export async function mount(container) {
                 <span>🛡️</span><span>Role-based access control enabled</span>
             </div>
             <h1 class="mt-3 text-3xl font-extrabold tracking-tight md:text-4xl">Voting Management</h1>
-            <p class="mt-2 max-w-2xl text-sm text-slate-200 md:text-base">
-                Run elections with cleaner workflow: candidate management, secure voting and transparent results.
-            </p>
+            
             <div class="mt-5 flex flex-wrap gap-3">
                 <button class="nav-btn btn btn-primary btn-sm" data-page="voting"><i class="fa-solid fa-check-to-slot me-1"></i>Start Voting</button>
                 <button class="nav-btn btn btn-outline-light btn-sm" data-page="results"><i class="fa-solid fa-chart-column me-1"></i>View Results</button>
