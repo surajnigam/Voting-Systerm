@@ -1,3 +1,4 @@
+Voters: 
 [
   {
     "name": "Amit Sharma",
@@ -64,5 +65,44 @@
     "password": "pass123",
     "role": "voter",
     "isVoted": true
+  }
+]
+
+candidates:
+[
+  {
+    "name": "Rahul Sharma",
+    "age": 45,
+    "party": "ABC Party",
+    "votes": [],
+    "totalVotes": 0
+  },
+  {
+    "name": "Priya Deshmukh",
+    "age": 39,
+    "party": "XYZ Party",
+    "votes": [],
+    "totalVotes": 0
+  },
+  {
+    "name": "Amit Verma",
+    "age": 50,
+    "party": "National Party",
+    "votes": [],
+    "totalVotes": 0
+  },
+  {
+    "name": "Sneha Kulkarni",
+    "age": 42,
+    "party": "People's Party",
+    "votes": [],
+    "totalVotes": 0
+  },
+  {
+    "name": "Vikram Singh",
+    "age": 48,
+    "party": "Democratic Front",
+    "votes": [],
+    "totalVotes": 0
   }
 ]
