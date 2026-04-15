@@ -6,6 +6,7 @@ export async function mount(container) {
             <div class="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs">
                 <span>🛡️</span><span>Role-based access control enabled</span>
             </div>
+            
             <h1 class="mt-3 text-3xl font-extrabold tracking-tight md:text-4xl">Voting Management</h1>
             
             <div class="mt-5 flex flex-wrap gap-3">
