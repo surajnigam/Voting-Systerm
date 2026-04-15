@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Amit Sharma",
+    "age": 28,
+    "email": "amit.sharma@example.com",
+    "mobile": "9876543210",
+    "address": "Mumbai, Maharashtra",
+    "adhar_number": 123456789012,
+    "password": "pass123",
+    "role": "admin",
+    "isVoted": false
+  },
+  {
+    "name": "Priya Verma",
+    "age": 24,
+    "email": "priya.verma@example.com",
+    "mobile": "9123456780",
+    "address": "Delhi, India",
+    "adhar_number": 223456789012,
+    "password": "pass123",
+    "role": "voter",
+    "isVoted": false
+  },
+  {
+    "name": "Rahul Mehta",
+    "age": 35,
+    "email": "rahul.mehta@example.com",
+    "mobile": "9988776655",
+    "address": "Ahmedabad, Gujarat",
+    "adhar_number": 323456789012,
+    "password": "pass123",
+    "role": "voter",
+    "isVoted": true
+  },
+  {
+    "name": "Sneha Patil",
+    "age": 30,
+    "email": "sneha.patil@example.com",
+    "mobile": "9090909090",
+    "address": "Pune, Maharashtra",
+    "adhar_number": 423456789012,
+    "password": "pass123",
+    "role": "voter",
+    "isVoted": false
+  },
+  {
+    "name": "Vikram Singh",
+    "age": 40,
+    "email": "vikram.singh@example.com",
+    "mobile": "9871234567",
+    "address": "Jaipur, Rajasthan",
+    "adhar_number": 523456789012,
+    "password": "pass123",
+    "role": "admin",
+    "isVoted": false
+  },
+  {
+    "name": "Anjali Gupta",
+    "age": 27,
+    "email": "anjali.gupta@example.com",
+    "mobile": "9012345678",
+    "address": "Lucknow, Uttar Pradesh",
+    "adhar_number": 623456789012,
+    "password": "pass123",
+    "role": "voter",
+    "isVoted": true
+  }
+]

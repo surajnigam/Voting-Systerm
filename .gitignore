@@ -1,0 +1,3 @@
+# git ignore this file while tracking the project
+node_modules/
+.env
