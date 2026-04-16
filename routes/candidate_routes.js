@@ -137,19 +137,32 @@ candidateRouts.post('/vote/:id', jwtAuthmiddleware, async (req, res) => {
         if (!isVoter) {
             return res.status(403).json({ message: 'admin cannot vote' });
         }
+        const foundVoter = await User.findById(voterId);
+        if (!foundVoter) {
+            return res.status(404).json({ message: 'Voter not found' });
+        }
+        // Enforce one vote per user across all candidates and sessions.
+        if (foundVoter.isVoted) {
+            return res.status(400).json({ message: 'You have already voted' });
+        }
+        const alreadyVotedInElection = await candidate.exists({ 'votes.voter': voterId });
+        if (alreadyVotedInElection) {
+            // Keep user flag in sync for old data where flag was not updated.
+            foundVoter.isVoted = true;
+            await foundVoter.save();
+            return res.status(400).json({ message: 'You have already voted' });
+        }
         const foundCandidate = await candidate.findById(candidateId);
         if (!foundCandidate) {
             return res.status(404).json({ message: 'Candidate not found' });
         }
-        const isVoted = foundCandidate.votes.some(vote => vote.voter.toString() === voterId.toString());
-        if (isVoted) {
-            return res.status(400).json({ message: 'You have already voted' });
-        }
         foundCandidate.votes.push({ voter: voterId, votedAt: new Date() });
         // Keep counter in sync with actual votes array.
         foundCandidate.votesCount = foundCandidate.votes.length;
-        await foundCandidate.save();         
-        res.status(200).json({ message: 'Vote cast successfully' });
+        await foundCandidate.save();
+        foundVoter.isVoted = true;
+        await foundVoter.save();
+        res.status(200).json({ message: 'Vote submitted successfully' });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: error.message, message: 'Internal server error' });

@@ -4,10 +4,8 @@ export async function mount(container) {
     container.innerHTML = `
         <section class="slide-up rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
             <h1 class="text-2xl font-semibold"><i class="fa-solid fa-check-to-slot me-2"></i>Cast Your Vote</h1>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Voter role required. One voter can vote once.</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-                <button id="voteListBtn" class="btn btn-secondary btn-sm"><i class="fa-solid fa-list me-1"></i>Load Candidates</button>
-            </div>
+           
+          
             <div class="mt-3 table-responsive rounded border">
                 <table class="table table-sm table-striped table-hover mb-0">
                     <thead>
@@ -26,12 +24,11 @@ export async function mount(container) {
                 </table>
             </div>
             <button id="voteBtn" class="mt-3 btn btn-primary"><i class="fa-solid fa-circle-check me-1"></i>Cast Vote</button>
-            <pre id="votingResult" class="result mt-3 rounded-xl bg-slate-900 p-3 text-emerald-200">Ready.</pre>
         
         </section>
     `;
 
-    container.querySelector("#voteListBtn")?.addEventListener("click", async () => {
+     async function loadCandidates() {
         try {
             const data = await apiRequest("GET", "/candidates/getAllCandidates");
             const body = container.querySelector("#votingCandidatesBody");
@@ -56,8 +53,8 @@ export async function mount(container) {
         } catch (error) {
             showResult("votingResult", "Load Error", error.message);
         }
-    });
-
+    };
+    loadCandidates();
     container.querySelector("#voteBtn")?.addEventListener("click", async () => {
         try {
             const selected = container.querySelector('input[name="selectedCandidate"]:checked');
@@ -66,9 +63,9 @@ export async function mount(container) {
             }
             const id = selected.value;
             const data = await apiRequest("POST", `/candidates/vote/${id}`, {});
-            showResult("votingResult", "Vote Success", data);
+            alert( data);
         } catch (error) {
-            showResult("votingResult", "Vote Error", error.message);
+            alert( error.message);
         }
     });
 }
