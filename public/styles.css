@@ -60,6 +60,52 @@ html.dark .app-menu-wrap {
 .app-action-select {
     min-width: 140px;
 }
+.candidate-image-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+}
+.candidate-image-overlay-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.92);
+}
+.candidate-image-overlay-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    padding: 24px;
+}
+.candidate-image-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.75);
+    color: #fff;
+    font-size: 24px;
+}
+.candidate-image-preview {
+    display: block;
+    max-width: 100%;
+    max-height: calc(100vh - 48px);
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+    border-radius: 12px;
+    background: rgb(15 23 42);
+}
 html.dark .bg-white,
 html.dark .table-responsive.rounded.border,
 html.dark .overflow-x-auto.rounded-xl.border {

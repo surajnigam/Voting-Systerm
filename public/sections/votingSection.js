@@ -16,17 +16,55 @@ export async function mount(container) {
                             <th>Age</th>
                             <th>Party</th>
                             <th>Total Votes</th>
+                            <th>Image</th>
                         </tr>
                     </thead>
                     <tbody id="votingCandidatesBody">
-                        <tr><td colspan="6" class="text-muted">Click "Load Candidates" to fetch data.</td></tr>
+                        <tr><td colspan="7" class="text-muted">Click "Load Candidates" to fetch data.</td></tr>
                     </tbody>
                 </table>
             </div>
             <button id="voteBtn" class="mt-3 btn btn-primary"><i class="fa-solid fa-circle-check me-1"></i>Cast Vote</button>
-        
         </section>
     `;
+
+    const imageOverlay = document.createElement("div");
+    imageOverlay.className = "candidate-image-overlay hidden";
+    imageOverlay.innerHTML = `
+        <div class="candidate-image-overlay-backdrop"></div>
+        <div class="candidate-image-overlay-content">
+            <button type="button" class="candidate-image-close" aria-label="Close image preview">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <img id="candidateImagePreview" alt="Candidate preview" class="candidate-image-preview" />
+        </div>
+    `;
+    document.body.appendChild(imageOverlay);
+
+    const imagePreviewEl = imageOverlay.querySelector("#candidateImagePreview");
+
+    function closeOverlay() {
+        imageOverlay.classList.add("hidden");
+        document.body.classList.remove("overflow-hidden");
+        imagePreviewEl.removeAttribute("src");
+    }
+
+    imageOverlay.addEventListener("click", (event) => {
+        if (
+            event.target.classList.contains("candidate-image-overlay-backdrop") ||
+            event.target.closest(".candidate-image-close")
+        ) {
+            closeOverlay();
+        }
+    });
+
+    document.addEventListener("keydown", handleEscape);
+
+    function handleEscape(event) {
+        if (event.key === "Escape" && !imageOverlay.classList.contains("hidden")) {
+            closeOverlay();
+        }
+    }
 
      async function loadCandidates() {
         try {
@@ -34,10 +72,11 @@ export async function mount(container) {
             const body = container.querySelector("#votingCandidatesBody");
             body.innerHTML = "";
             if (!Array.isArray(data) || data.length === 0) {
-                body.innerHTML = `<tr><td colspan="6" class="text-muted">No candidates found.</td></tr>`;
+                body.innerHTML = `<tr><td colspan="7" class="text-muted">No candidates found.</td></tr>`;
             } else {
                 for (const candidate of data) {
                     const tr = document.createElement("tr");
+                    const imageSrc = candidate.image ? `data:image/*;base64,${candidate.image}` : "";
                     tr.innerHTML = `
                         <td><input class="form-check-input" type="radio" name="selectedCandidate" value="${candidate._id}"></td>
                         <td class="small">${candidate._id ?? "-"}</td>
@@ -45,6 +84,13 @@ export async function mount(container) {
                         <td>${candidate.age ?? "-"}</td>
                         <td>${candidate.party ?? "-"}</td>
                         <td>${candidate.votesCount ?? candidate.votes?.length ?? 0}</td>
+                        <td>
+                            ${candidate.image
+                                ? `<button type="button" class="btn btn-outline-secondary btn-sm view-image-btn" data-image="${imageSrc}">
+                                    <i class="fa-regular fa-image me-1"></i>View
+                                   </button>`
+                                : "-"}
+                        </td>
                     `;
                     body.appendChild(tr);
                 }
@@ -55,6 +101,15 @@ export async function mount(container) {
         }
     };
     loadCandidates();
+
+    container.addEventListener("click", (event) => {
+        const button = event.target.closest(".view-image-btn");
+        if (!button || !imagePreviewEl) return;
+        imagePreviewEl.src = button.dataset.image || "";
+        imageOverlay.classList.remove("hidden");
+        document.body.classList.add("overflow-hidden");
+    });
+
     container.querySelector("#voteBtn")?.addEventListener("click", async () => {
         try {
             const selected = container.querySelector('input[name="selectedCandidate"]:checked');
@@ -68,4 +123,9 @@ export async function mount(container) {
             alert( error.message);
         }
     });
+
+    return () => {
+        document.removeEventListener("keydown", handleEscape);
+        imageOverlay.remove();
+    };
 }
